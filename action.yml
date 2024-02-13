@@ -1,8 +1,7 @@
-name: Deploy PR Preview
-author: Ross Williams
+name: Deploy Release
+author: Michael Anderson
 description: >
-  Deploy a pull request preview to GitHub Pages, similar to Vercel and
-  Netlify.
+  Deploy a release to GitHub Pages (minor change from rossjrw/pr-preview-action).
 
 branding:
   icon: git-pull-request
@@ -17,21 +16,20 @@ inputs:
       repository, you can add a Personal Access Token (PAT).
     required: false
     default: ${{ github.token }}
-  preview-branch:
-    description: Branch on which the previews will be deployed.
+  release-branch:
+    description: Branch on which the release will be deployed.
     required: false
     default: gh-pages
-  umbrella-dir:
-    description: Name of the directory containing all previews.
-    required: false
-    default: pr-preview
+  release-dir:
+    description: Name of the directory containing this release.
+    required: true
   source-dir:
     description: Directory containing files to deploy.
     required: false
     default: .
   deploy-repository:
     description: >
-      The GitHub repository to deploy the preview to.
+      The GitHub repository to deploy the release to.
       This should be formatted like `<org name>/<repo name>`, e.g.
       `rossjrw/pr-preview-action`.
       Defaults to the current repository.
@@ -48,21 +46,15 @@ inputs:
   action:
     description: >
       Determines what this action will do when it is executed. Supported
-      values: `deploy`, `remove`, `auto` (default).
+      values: `deploy`, `remove`. (`deploy` is the default action).
 
-      If set to `deploy`, will attempt to deploy the preview and overwrite
-      any existing preview in that location.
+      If set to `deploy`, will attempt to deploy the release and overwrite
+      any existing release in that location.
 
-      If set to `remove`, will attempt to remove the preview in that
+      If set to `remove`, will attempt to remove the release in that
       location.
-
-      If set to `auto`, the action will try to determine whether to deploy
-      or remove the preview. It will deploy the preview on
-      `pull_request.types.synchronize` and `.opened` events, and remove it
-      on `pull_request.types.closed` events. It will not do anything for
-      all other events. `auto` is the default value.
     required: false
-    default: auto
+    default: deploy
 
 outputs:
   deployment-url:
@@ -75,7 +67,7 @@ runs:
     - name: Store environment variables
       env:
         action: ${{ inputs.action }}
-        umbrella: ${{ inputs.umbrella-dir }}
+        release: ${{ inputs.release-dir }}
         pr: ${{ github.event.number }}
         actionref: ${{ github.action_ref }}
         actionrepo: ${{ github.action_repository }}
@@ -84,7 +76,7 @@ runs:
         token: ${{ inputs.token }}
       run: |
         echo "action=$action" >> $GITHUB_ENV
-        echo "targetdir=$umbrella/pr-$pr" >> $GITHUB_ENV
+        echo "targetdir=$release" >> $GITHUB_ENV
         echo "pr=$pr" >> $GITHUB_ENV
 
         org=$(echo "$deployrepo" | cut -d "/" -f 1)
@@ -120,16 +112,16 @@ runs:
       run: $GITHUB_ACTION_PATH/lib/determine-auto-action.sh
       shell: bash
 
-    - name: Deploy preview directory
+    - name: Deploy release directory
       if: env.action == 'deploy'
       uses: JamesIves/github-pages-deploy-action@65b5dfd4f5bcd3a7403bbc2959c144256167464e # v4.5.0
       with:
         token: ${{ env.token }}
         repository-name: ${{ env.deployrepo }}
-        branch: ${{ inputs.preview-branch }}
+        branch: ${{ inputs.release-branch }}
         folder: ${{ inputs.source-dir }}
         target-folder: ${{ env.targetdir }}
-        commit-message: Deploy preview for PR ${{ env.pr }} 🛫
+        commit-message: Deploy release for PR ${{ env.pr }} 🛫
         force: false
 
     - name: Expose deployment URL
@@ -141,48 +133,48 @@ runs:
       if: env.action == 'deploy' && env.deployment_status == 'success'
       uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31 # v2.9.0
       with:
-        header: pr-preview
+        header: release
         message: "\
-          [PR Preview Action]\
+          [PR Release Action]\
           (${{ github.server_url }}/${{ env.actionrepo }})
           ${{ env.action_version }}
 
           :---:
 
-          :rocket: Deployed preview to
+          :rocket: Deployed release to
           https://${{ env.pagesurl }}/${{ env.targetdir }}/
 
-          on branch [`${{ inputs.preview-branch }}`](\
+          on branch [`${{ inputs.release-branch }}`](\
           ${{ github.server_url }}/${{ env.deployrepo }}\
-          /tree/${{ inputs.preview-branch }})
+          /tree/${{ inputs.release-branch }})
           at ${{ env.datetime }}
           "
 
-    - name: Remove preview directory
+    - name: Remove release directory
       if: env.action == 'remove'
       uses: JamesIves/github-pages-deploy-action@65b5dfd4f5bcd3a7403bbc2959c144256167464e # v4.5.0
       with:
         token: ${{ env.token }}
         repository-name: ${{ env.deployrepo }}
-        branch: ${{ inputs.preview-branch }}
+        branch: ${{ inputs.release-branch }}
         folder: ${{ env.emptydir }}
         target-folder: ${{ env.targetdir }}
-        commit-message: Remove preview for PR ${{ env.pr }} 🛬
+        commit-message: Remove release for PR ${{ env.pr }} 🛬
         force: false
 
     - name: Leave a comment after removal
       if: env.action == 'remove' && env.deployment_status == 'success'
       uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31 # v2.9.0
       with:
-        header: pr-preview
+        header: release
         message: "\
-          [PR Preview Action]\
+          [PR Release Action]\
           (${{ github.server_url }}/${{ env.actionrepo }})
           ${{ env.action_version }}
 
           :---:
 
-          Preview removed because the pull request was closed.
+          Release removed.
 
           ${{ env.datetime }}
           "
