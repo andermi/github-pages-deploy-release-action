@@ -18,4 +18,4 @@ jobs:
         with:
           source-dir: test
           action: deploy
-          release-dir: v0.0.1
+          release-dir: v0.1.0
