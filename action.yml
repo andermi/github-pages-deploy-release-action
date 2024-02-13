@@ -76,7 +76,7 @@ runs:
         token: ${{ inputs.token }}
       run: |
         echo "action=$action" >> $GITHUB_ENV
-        echo "targetdir=$release" >> $GITHUB_ENV
+        echo "targetdir=release/$release" >> $GITHUB_ENV
         echo "pr=$pr" >> $GITHUB_ENV
 
         org=$(echo "$deployrepo" | cut -d "/" -f 1)

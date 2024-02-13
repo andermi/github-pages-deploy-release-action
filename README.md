@@ -1,5 +1,7 @@
 # Deploy release action
 
+Forked/adapted from: [rossjwr/pr-preview-action](https://github.com/rossjrw/pr-preview-action)
+
 [GitHub Action](https://github.com/features/actions) that deploys releases
 to [GitHub Pages](https://pages.github.com/). Works on any
 repository with a GitHub Pages site.
@@ -13,8 +15,11 @@ Features:
 - Retains the deployed release when the pull
   request is closed
 
-URLs look like this:
-`https://[owner].github.io/[repo]/<release-name>/`
+Main URL will still post to:
+`https://[owner].github.io/[repo]`
 
-this branch url:
-https://andermi.github.io/github-pages-deploy-release-action/release/v1.0.0/
+Release URLs look like this:
+`https://[owner].github.io/[repo]/release/[release-dir]/`
+
+This branch url:
+https://andermi.github.io/github-pages-deploy-release-action/release/v1.0.1/

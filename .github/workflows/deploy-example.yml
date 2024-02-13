@@ -14,4 +14,5 @@ jobs:
         with:
           branch: gh-pages
           folder: test
-          clean-exclude: releases/
+          clean-exclude: release/
+          force: false
