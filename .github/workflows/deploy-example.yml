@@ -16,7 +16,7 @@ jobs:
           folder: test
           clean-exclude: release/
           force: false
-  deploy-release-v1.0.1:
+  deploy-release-v1_0_1:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
