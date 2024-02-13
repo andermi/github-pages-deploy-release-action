@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Deploy release
-        uses: andermi/github-pages-deploy-release-action@v1
+        uses: andermi/github-pages-deploy-release-action@v1.0.0
         with:
           source-dir: test
           action: deploy
