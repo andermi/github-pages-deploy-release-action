@@ -1,5 +1,7 @@
 # Deploy release action
 
+Forked/adapted from: https://github.com/rossjrw/pr-preview-action
+
 [GitHub Action](https://github.com/features/actions) that deploys releases
 to [GitHub Pages](https://pages.github.com/). Works on any
 repository with a GitHub Pages site.
