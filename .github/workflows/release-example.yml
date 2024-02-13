@@ -1,4 +1,4 @@
-name: Preview example site
+name: Release example site
 on:
   pull_request:
     types:
@@ -6,15 +6,16 @@ on:
       - reopened
       - synchronize
       - closed
-concurrency: preview-${{ github.ref }}
+concurrency: release-${{ github.ref }}
 jobs:
-  deploy-preview:
+  deploy-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Deploy preview
-        uses: rossjrw/pr-preview-action@v1
+      - name: Deploy release
+        uses: andermi/github-pages-deploy-release-action@v1
         with:
           source-dir: test
+          action: deploy
+          release-dir: v0.0.1
