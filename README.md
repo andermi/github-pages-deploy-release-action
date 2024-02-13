@@ -20,5 +20,3 @@ URLs look like this:
 
 main URL will still post to:
 `https://[owner].github.io/[repo]`
-
-hmm
