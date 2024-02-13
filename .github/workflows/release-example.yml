@@ -11,9 +11,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: andermi/example_release
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v2
+
       - name: Deploy release
         uses: andermi/github-pages-deploy-release-action@v1.0.1
         with:
           source-dir: test
           action: deploy
-          release-dir: v1.0.0
+          release-dir: v1.0.1
