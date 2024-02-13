@@ -1,5 +1,5 @@
 {
-  "name": "pr-preview",
+  "name": "github-pages-deploy-release",
   "version": "0.0.0",
   "devDependencies": {
     "prettier": "2.5.1",
