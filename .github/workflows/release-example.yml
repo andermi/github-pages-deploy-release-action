@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - andermi/example_release
-concurrency: release-${{ github.ref }}
 jobs:
   deploy-release:
     runs-on: ubuntu-latest
