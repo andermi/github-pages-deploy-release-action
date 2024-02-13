@@ -15,10 +15,11 @@ Features:
 - Retains the deployed release when the pull
   request is closed
 
-URLs look like this:
-`https://[owner].github.io/[repo]/release/[release-dir]/`
-
-main URL will still post to:
+Main URL will still post to:
 `https://[owner].github.io/[repo]`
 
-hmm
+Release URLs look like this:
+`https://[owner].github.io/[repo]/release/[release-dir]/`
+
+This branch URL:
+https://andermi.github.io/github-pages-deploy-release-action/release/v1.0.1/
