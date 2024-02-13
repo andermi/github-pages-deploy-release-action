@@ -1,0 +1,20 @@
+name: Release example site
+on:
+  push:
+    branches:
+      - andermi/example_release
+concurrency: release-${{ github.ref }}
+jobs:
+  deploy-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: andermi/example_release
+      - name: Deploy release
+        uses: andermi/github-pages-deploy-release-action@v1.0.1
+        with:
+          source-dir: test
+          action: deploy
+          release-dir: v1.0.0
