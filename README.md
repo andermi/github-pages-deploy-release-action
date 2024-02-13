@@ -15,3 +15,6 @@ Features:
 
 URLs look like this:
 `https://[owner].github.io/[repo]/<release-name>/`
+
+this branch url:
+https://andermi.github.io/github-pages-deploy-release-action/release/v1.0.0/
