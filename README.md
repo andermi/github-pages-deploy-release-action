@@ -16,4 +16,4 @@ Features:
   request is closed
 
 URLs look like this:
-`https://[owner].github.io/[repo]/<release-name>/`
+`https://[owner].github.io/[repo]/release/<release-name>/`
