@@ -1,11 +1,8 @@
 name: Release example site
 on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - closed
+  push:
+    branches:
+      - andermi/example_release
 concurrency: release-${{ github.ref }}
 jobs:
   deploy-release:
