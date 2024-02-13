@@ -21,5 +21,5 @@ Main URL will still post to:
 Release URLs look like this:
 `https://[owner].github.io/[repo]/release/[release-dir]/`
 
-This branch url:
+This branch URL:
 https://andermi.github.io/github-pages-deploy-release-action/release/v1.0.1/

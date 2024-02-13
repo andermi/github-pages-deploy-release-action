@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  build:
+  deploy-main:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,3 +16,21 @@ jobs:
           folder: test
           clean-exclude: release/
           force: false
+  deploy-release-v1_0_1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: andermi/example_release
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v2
+
+      - name: Deploy release
+        uses: andermi/github-pages-deploy-release-action@v1.0.1
+        with:
+          source-dir: test
+          action: deploy
+          release-dir: v1.0.1
